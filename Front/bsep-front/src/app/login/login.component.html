@@ -1,0 +1,31 @@
+<div class="pozadina">
+  <div class="container">
+    <h2>Login</h2>
+    <!-- Add the following div to display an error message -->
+    <div *ngIf="userDoesNotExist" class="error-message">
+      User does not exist. Please check your credentials and try again.
+    </div>
+      <div *ngIf="wrongPassword" class="error-message">
+        Wrong password.
+      </div>
+    <form>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required [(ngModel)]="username">
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required [(ngModel)]="password">
+      </div>
+  
+      <button type="button" (click)="login()">Login</button>
+    </form>
+</div>
+
+
+
+</div>
+
+
+  

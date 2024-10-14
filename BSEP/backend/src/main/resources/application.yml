@@ -1,0 +1,25 @@
+security.jwt.token.secret-key: my-secret-key
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/bezb
+    username: postgres
+    password: anja
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: anjakovacevic9455@gmail.com
+    password: hqsq rvfw gpou dxig
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth:
+            true
+

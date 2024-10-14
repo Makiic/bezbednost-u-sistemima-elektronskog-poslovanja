@@ -1,0 +1,124 @@
+<div class="row justify-content-center">
+    <div class="col-4">
+        
+
+        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button [ngClass]="active == 'login' ? 'nav-link active' : 'nav-link'" id="tab-login"
+                        (click)="onLoginTab()">Login
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button [ngClass]="active == 'register' ? 'nav-link active' : 'nav-link'" id="tab-register"
+                        (click)="onRegisterTab()">Register
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div [ngClass]="active == 'login' ? 'tab-pane fade show active' : 'tab-pane fade'">
+                <form (ngSubmit)="onSubmitLogin()" #loginForm="ngForm">
+
+                    <div class="form-outline mb-4">
+                        <input type="login" id="loginName" name="login" class="form-control" [(ngModel)]="login"/>
+                        <label class="form-label" for="loginName">Username</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="password" id="loginPassword" name="password" class="form-control" [(ngModel)]="password"/>
+                        <label class="form-label" for="loginPassword">Password</label>
+                    </div>
+                    <div class="form-outline mb-4" *ngIf="showOTP">
+                        <input type="text" id="otp" name="otp" class="form-control" [(ngModel)]="otp"/>
+                        <label class="form-label" for="otp">One-Time Password (OTP)</label>
+                    </div>
+                    <form [formGroup]="aFormGroup">
+                        <ngx-recaptcha2 #captchaElem
+                          [siteKey]="siteKey"
+                          (success)="handleSuccess($event)">
+                        </ngx-recaptcha2>
+                      </form>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                </form>
+            </div>
+            <div [ngClass]="active == 'register' ? 'tab-pane fade show active' : 'tab-pane fade'">
+                <form (ngSubmit)="onSubmitRegister()" #registerForm="ngForm">
+					<div class="btn-group mb-3" role="group" aria-label="User type">
+						<button type="button" class="btn btn-primary" (click)="onUserTypeToggle('individual')">Fizičko lice</button>
+						<button type="button" class="btn btn-primary" (click)="onUserTypeToggle('legal')">Pravno lice</button>
+					</div>
+                    <div class="form-outline mb-4" *ngIf="userType === 'individual'">
+                        <input type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="firstName"/>
+                        <label class="form-label" for="firstName">First name</label>
+                    </div>
+                    <div class="form-outline mb-4" *ngIf="userType === 'individual'">
+                        <input type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="lastName"/>
+                        <label class="form-label" for="lastName">Last name</label>
+                    </div>
+
+                    <div class="form-outline mb-4" *ngIf="userType === 'legal'">
+                        <input type="text" id="pib" name="pib" class="form-control" [(ngModel)]="pib"/>
+                        <label class="form-label" for="pib">PIB</label>
+                    </div>
+                    <div class="form-outline mb-4" *ngIf="userType === 'legal'">
+                        <input type="text" id="companyName" name="companyName" class="form-control" [(ngModel)]="companyName"/>
+                        <label class="form-label" for="companyName">Naziv firme</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="address" name="address" class="form-control" [(ngModel)]="address"/>
+                        <label class="form-label" for="address">Adresa</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="city" name="city" class="form-control" [(ngModel)]="city"/>
+                        <label class="form-label" for="city">Grad</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="country" name="country" class="form-control" [(ngModel)]="country"/>
+                        <label class="form-label" for="country">Država</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" [(ngModel)]="phoneNumber"/>
+                        <label class="form-label" for="phoneNumber">Broj telefona</label>
+                    </div>
+
+                    <input type="hidden" id="isLegal" name="isLegal" [(ngModel)]="isLegal"/>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="login" name="login" class="form-control" [(ngModel)]="login"/>
+                        <label class="form-label" for="login">Username</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="password" id="registerPassword" name="password" class="form-control" [(ngModel)]="password"/>
+                        <label class="form-label" for="registerPassword">Password</label>
+                    </div>
+
+					<div class="form-outline mb-4">
+						<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" [(ngModel)]="confirmPassword"/>
+						<label class="form-label" for="confirmPassword">Confirm Password</label>
+					</div>
+					<div class="form-group mb-4">
+						<label>Choose Package:</label><br>
+						<input type="radio" id="BASIC" name="packageType" value="BASIC" [(ngModel)]="packageType">
+						<label for="BASIC">Basic</label><br>
+						
+						<input type="radio" id="STANDARD" name="packageType" value="STANDARD" [(ngModel)]="packageType">
+						<label for="STANDARD">Standard</label><br>
+						
+						<input type="radio" id="GOLD" name="packageType" value="GOLD" [(ngModel)]="packageType">
+						<label for="GOLD">Gold</label><br>
+					</div>
+					<div *ngIf="password.length < 8" class="text-danger">Lozinka mora imati barem 8 karaktera.</div>
+					<div *ngIf="!containsNumber(password)" class="text-danger">Lozinka mora sadržati barem jedan broj.</div>
+					<div *ngIf="!containsSpecialCharacter(password)" class="text-danger">Lozinka mora sadržati barem jedan specijalni karakter.</div>
+					
+                    <button type="submit" class="btn btn-primary btn-block mb-3" [disabled]="password.length < 8 || !containsNumber(password) || !containsSpecialCharacter(password)">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<body>
+  <div class="menu-container">
+    <button *ngIf="userStateService.getLoggedInUser() != undefined"class="button home" [routerLink]="'/homepage'">Home</button>
+    <div class="dropdown">
+      <button *ngIf="userStateService.getLoggedInUser()" class="dropbtn">Menu</button>
+      <div class="dropdown-content">
+        <button *ngIf="userStateService.getLoggedInUser() && userStateService.getLoggedInUser()?.userRole === 'ADMIN'" class="dropbtn" [routerLink]="'/create-certificate'">Create certificate</button>
+        <button *ngIf="userStateService.getLoggedInUser() && userStateService.getLoggedInUser()?.userRole === 'ADMIN'" class="dropbtn" [routerLink]="'/all-certificates'">All certificates</button>
+        <button *ngIf="userStateService.getLoggedInUser()" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+  
+    </body>
+    <ng-template #sorryMessage>
+      <div class="sorry-message">
+        <p>Unauthorized</p>
+      </div>
+    </ng-template>
+
+    <!-- NAPOMENA::: za all equipment sam dodala COMPANY ADMIN , ne znam kome to treba, pa nek izmeni  -->

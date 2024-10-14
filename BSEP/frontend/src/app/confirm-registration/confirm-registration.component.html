@@ -1,0 +1,19 @@
+<div *ngIf="users && users.length">
+  <h2>Lista korisnika na čekanju:</h2>
+  <ul>
+    <li *ngFor="let user of users">
+      <p>Ime: {{ user.firstName }}</p>
+      <p>Prezime: {{ user.lastName }}</p>
+      <p>Email: {{ user.login }}</p>
+      <!-- Dodajte ostale informacije koje želite prikazati -->
+      <button (click)="user.id && confirmRegistration(user.id)">Potvrdi registraciju</button>
+      <button *ngIf="user.id !== rejectedUserId" (click)="rejectRegistration(user.id)">Odbij registraciju</button>
+      <button *ngIf="user.id === rejectedUserId" (click)="confirmRejection(user.id, rejectionReason)">Potvrdi odbijanje</button>
+      <textarea *ngIf="user.id === rejectedUserId" [(ngModel)]="rejectionReason" placeholder="Unesite razlog odbijanja"></textarea>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!users || users.length === 0">
+  <p>Nema korisnika na čekanju.</p>
+</div>

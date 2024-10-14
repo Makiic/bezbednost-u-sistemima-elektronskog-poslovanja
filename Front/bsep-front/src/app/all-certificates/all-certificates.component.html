@@ -1,0 +1,16 @@
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-sm-4" *ngFor="let certificate of certificates">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title border-bottom pb-3">Certificate Information</h5>
+            <p class="card-text"><b>Issued to:</b> {{ getCommonName(certificate.subject) }}</p>
+            <p class="card-text"><b>Issued by:</b> {{ getCommonName(certificate.issuer) }}</p>
+            <p class="card-text"><b>Valid from</b> {{ formatDate(certificate.startDate) }} <b>to</b> {{ formatDate(certificate.endDate) }}</p>
+            <button class="btn btn-danger">Withdraw Certificate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
